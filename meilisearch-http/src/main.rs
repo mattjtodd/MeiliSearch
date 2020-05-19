@@ -5,7 +5,7 @@ use actix_web::{middleware, HttpServer};
 use log::info;
 use main_error::MainError;
 use meilisearch_http::data::Data;
-use meilisearch_http::helpers::NormalizeSlashes;
+use meilisearch_http::helpers::NormalizePath;
 use meilisearch_http::option::Opt;
 use meilisearch_http::{create_app, index_update_callback};
 use structopt::StructOpt;
@@ -73,7 +73,7 @@ async fn main() -> Result<(), MainError> {
             )
             .wrap(middleware::Logger::default())
             .wrap(middleware::Compress::default())
-            .wrap(NormalizeSlashes)
+            .wrap(NormalizePath)
     })
     .bind(opt.http_addr)?
     .run()
